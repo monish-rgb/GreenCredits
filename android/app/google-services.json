@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "182105393508",
+    "project_id": "employeelogin-cc037",
+    "storage_bucket": "employeelogin-cc037.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:182105393508:android:1cf4dbd49b8e099ec9d271",
+        "android_client_info": {
+          "package_name": "com.mobileapp.carbon_emission_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "182105393508-a10op83ubvumn4uk09qeru8g0nbbd25e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mobileapp.carbon_emission_app",
+            "certificate_hash": "9ac3f805669a2feaadbb237607026dc37474495e"
+          }
+        },
+        {
+          "client_id": "182105393508-h5l6u1s96l3cr4t88smkcjbpsr8grt3s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB5IK4qDIqgbwPeaQnvhWAEV8Wh07K1GJU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "182105393508-h5l6u1s96l3cr4t88smkcjbpsr8grt3s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
