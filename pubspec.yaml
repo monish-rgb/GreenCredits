@@ -51,9 +51,9 @@ dev_dependencies:
   flutter_lints: ^5.0.0
 
 flutter_launcher_icons:
-  android: true
-  ios: true
-  image_path: "assets/AppIcon.png"
+  android: "launcher_icon"
+  remove_alpha_ios: true
+  image_path: "assets/appIcon_updated.png"
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
