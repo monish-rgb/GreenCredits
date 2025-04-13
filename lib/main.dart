@@ -291,7 +291,6 @@ class _LoginPageState extends State<LoginPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const TextField(autofocus: true),
                   TextFormField(
                     controller: _emailController,
                     //focusNode: _emailFocusNode,
