@@ -1,4 +1,4 @@
-
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -6,6 +6,8 @@ import 'package:flutter_location_search/flutter_location_search.dart';
 import 'main.dart';
 import 'user_state_service.dart';
 import 'tracker.dart';
+import 'CarbonCredits_Calc.dart';
+import 'User_Activity.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -18,6 +20,7 @@ class _HomePageState extends State<HomePage> {
   UserModel? _userData;
   bool _isLoading = true;
   String _locationText = 'Tap here to search a place';
+  double _lastCO2=0.0;
 
   final TextEditingController nameController = TextEditingController();
 
@@ -31,7 +34,7 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       _isLoading = true;
     });
-
+    getlastCO2();
     // Get user data from our service
     final userService = UserStateService();
     final userData = userService.currentUser ?? await userService.loadUser();
@@ -71,10 +74,6 @@ class _HomePageState extends State<HomePage> {
     }
   }
   Future<void> _verifylocation(String location) async {
-    // setState(() {
-    //   _isLoading = true;
-    // });
-
     try {
       // Clear user state using our service
       final userService = UserStateService();
@@ -156,6 +155,12 @@ class _HomePageState extends State<HomePage> {
       );
     }
   }
+
+  Future<void> getlastCO2() async {
+    CarbonCredits instance = CarbonCredits();
+    _lastCO2 = (await instance.getLastCO2())!;
+  }
+
   @override
   Widget build(BuildContext context) {
     if (_isLoading) {
@@ -244,6 +249,31 @@ class _HomePageState extends State<HomePage> {
                 );
               },
             ),
+            ListTile(
+              title: const Text('Your GreeCredits'),
+              leading: Icon(Icons.calculate),
+              onTap: () {
+                Navigator.pop(context);
+
+                // Navigate to the map screen
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => CarbonCreditsScreen()),
+                );
+              },
+            ),
+            ListTile(
+              title: const Text('Your Activity'),
+              leading: Icon(Icons.local_activity_outlined),
+              onTap: () {
+                Navigator.pop(context);
+                // Navigate to the map screen
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ActivityScreen()),
+                );
+              },
+            ),
           ],
         ),
       ),
@@ -276,7 +306,7 @@ class _HomePageState extends State<HomePage> {
               ),
               SizedBox(height: 16),
               TextButton(
-                child: Text(_locationText),
+                child: Text(_locationText,style: TextStyle(color: Colors.black,fontSize: 16)),
                 onPressed: () async {
                   try {
                     LocationData? locationData = await LocationSearch.show(
@@ -354,20 +384,16 @@ class _HomePageState extends State<HomePage> {
                         leading: Icon(Icons.bar_chart,
                             ),
                         title: Text(
-                          'Carbon Footprint',
+                          'Recent CarbonFootprint',
                           style: TextStyle(
-
                           ),
                         ),
                         subtitle: Text(
-                          'Tap to calculate',
-                          style: TextStyle(
-
-                          ),
+                          _lastCO2.toStringAsFixed(1) + ' kg'
                         ),
                         onTap: () {
-                          // Navigate to carbon footprint calculator
-                        },
+                          getlastCO2();
+                        }
                       ),
                     ],
                   ),

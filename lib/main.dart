@@ -40,10 +40,40 @@ class _AuthWrapperState extends State<AuthWrapper> {
   bool _isLoading = true;
   bool _isLoggedIn = false;
 
+  late FocusNode myFocusNode;
+
+  // Focus nodes to track when fields are being edited
+  final _emailFocusNode = FocusNode();
+  bool _isEmailFocused = false;
+
+  // Animation controller for typing effects
+  late AnimationController _animationController;
+
   @override
   void initState() {
     super.initState();
+
+    myFocusNode = FocusNode();
+
+    // Set up focus listeners
+    _emailFocusNode.addListener(_handleEmailFocusChange);
+
     _checkLoginStatus();
+  }
+
+  void _handleEmailFocusChange() {
+    setState(() {
+      _isEmailFocused = _emailFocusNode.hasFocus;
+    });
+    _updateAnimations();
+  }
+
+  void _updateAnimations() {
+    if (_isEmailFocused) {
+      _animationController.forward();
+    } else {
+      _animationController.reverse();
+    }
   }
 
   // Check if user is already logged in
@@ -97,6 +127,7 @@ class _LoginPageState extends State<LoginPage> {
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
+   // _emailFocusNode.dispose();
     super.dispose();
   }
 
@@ -260,17 +291,29 @@ class _LoginPageState extends State<LoginPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
+                  const TextField(autofocus: true),
                   TextFormField(
                     controller: _emailController,
+                    //focusNode: _emailFocusNode,
                     keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
                       labelText: 'Email',
-                      labelStyle: TextStyle(color: Colors.white54),
+                      labelStyle: TextStyle(color: Colors.white,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      hintText: 'your.email@example.com',
+                      hintStyle: const TextStyle(color: Colors.white38),
+                      //filled: true,
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(16),
                         borderSide: BorderSide(color: Colors.white),
                       ),
-                      prefixIcon: Icon(Icons.email_outlined),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(16),
+                        borderSide: BorderSide(color: Colors.white38, width:.5),
+                      ),
+
+                      prefixIcon: Icon(Icons.email_outlined,color: Colors.white70),
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -290,17 +333,18 @@ class _LoginPageState extends State<LoginPage> {
                     obscureText: !_isPasswordVisible,
                     decoration: InputDecoration(
                       labelText: 'Password',
-                      labelStyle: TextStyle(color: Colors.white54),
+                      labelStyle: TextStyle(color: Colors.white),
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(16),
                         borderSide: BorderSide(color: Colors.white),
                       ),
-                      prefixIcon: Icon(Icons.lock_outline),
+                      prefixIcon: Icon(Icons.lock_outline,color: Colors.white70),
                       suffixIcon: IconButton(
                         icon: Icon(
                           _isPasswordVisible
                               ? Icons.visibility
                               : Icons.visibility_off,
+                            color: Colors.white70
                         ),
                         onPressed: () {
                           setState(() {

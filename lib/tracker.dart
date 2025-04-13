@@ -162,7 +162,7 @@ class _TrackerState extends State<TrackerMap> with WidgetsBindingObserver {
           locationData.longitude!,
         );
         _isLoading = false;
-      print("Current Position: $_currentPosition");
+        print("Current Position: $_currentPosition");
         // Add marker for current position
         _markers.add(
           Marker(
@@ -414,13 +414,6 @@ class _TrackerState extends State<TrackerMap> with WidgetsBindingObserver {
               },
               child: Text('Close',style: TextStyle(color: Colors.black)),
             ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pop(ctx);
-                _viewTripHistory();
-              },
-              child: Text('View Trip History',style: TextStyle(color: Colors.black)),
-            ),
           ],
         ),
       ),
@@ -438,7 +431,7 @@ class _TrackerState extends State<TrackerMap> with WidgetsBindingObserver {
         return Icons.directions_bus;
       case TransportMode.train:
         return Icons.train;
-      }
+    }
   }
 
   String _formatDuration(Duration duration) {
@@ -521,7 +514,7 @@ class _TrackerState extends State<TrackerMap> with WidgetsBindingObserver {
         return Icons.directions_bus;
       case TransportMode.train:
         return Icons.train;
-      }
+    }
   }
 
 
@@ -608,10 +601,10 @@ class _TrackerState extends State<TrackerMap> with WidgetsBindingObserver {
               ),
             ),
           ),
-    ],
+      ],
       ),
 
-     floatingActionButton: FloatingActionButton.extended(
+      floatingActionButton: FloatingActionButton.extended(
         onPressed: _isTracking ? _stopTracking : _startTracking,
         icon: Icon(_isTracking ? Icons.stop : Icons.play_arrow,color: Colors.black),
         label: Text(_isTracking ? 'Stop Tracking' : 'Start Tracking',style: TextStyle(color: Colors.black),),
